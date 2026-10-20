@@ -1,0 +1,72 @@
+﻿<Window x:Class="NewsWPF.Pages.NewsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Управление новостями" Height="700" Width="1024">
+
+    <Grid Margin="10">
+        <TabControl>
+            <!-- Вкладка Новости -->
+            <TabItem Header="Новости">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                        <Button Content="Добавить" Style="{StaticResource GreenBtn}" Command="{Binding AddNewsCommand}"/>
+                        <Button Content="Редактировать" Style="{StaticResource BlueBtn}" Command="{Binding EditNewsCommand}" Margin="10,0"/>
+                        <Button Content="Удалить" Style="{StaticResource RedBtn}" Command="{Binding DeleteNewsCommand}"/>
+                        <Button Content="Обновить" Style="{StaticResource BlueBtn}" Command="{Binding RefreshCommand}" Margin="10,0"/>
+                    </StackPanel>
+
+                    <DataGrid x:Name="NewsDataGrid" Grid.Row="1" 
+                              ItemsSource="{Binding NewsList}" 
+                              SelectedItem="{Binding SelectedNews}"
+                              AutoGenerateColumns="False" 
+                              IsReadOnly="True"
+                              MouseDoubleClick="NewsDataGrid_MouseDoubleClick">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="40"/>
+                            <DataGridTextColumn Header="Заголовок" Binding="{Binding Title}" Width="*"/>
+                            <DataGridTextColumn Header="Категория" Binding="{Binding Category}" Width="120"/>
+                            <DataGridTextColumn Header="Дата" Binding="{Binding DateOfPublication, StringFormat=dd.MM.yyyy}" Width="100"/>
+                            <DataGridTextColumn Header="Автор" Binding="{Binding Author}" Width="120"/>
+                            <DataGridTextColumn Header="Просмотры" Binding="{Binding NumberOfView}" Width="80"/>
+                            <DataGridTextColumn Header="Статус" Binding="{Binding Status}" Width="100"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </TabItem>
+
+            <!-- Вкладка Категории -->
+            <TabItem Header="Категории">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                        <Button Content="Добавить" Style="{StaticResource GreenBtn}" Command="{Binding AddCategoryCommand}"/>
+                        <Button Content="Редактировать" Style="{StaticResource BlueBtn}" Command="{Binding EditCategoryCommand}" Margin="10,0"/>
+                        <Button Content="Удалить" Style="{StaticResource RedBtn}" Command="{Binding DeleteCategoryCommand}"/>
+                    </StackPanel>
+
+                    <DataGrid Grid.Row="1" 
+                              ItemsSource="{Binding CategoryList}" 
+                              SelectedItem="{Binding SelectedCategory}"
+                              AutoGenerateColumns="False" 
+                              IsReadOnly="True">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="40"/>
+                            <DataGridTextColumn Header="Название" Binding="{Binding Name}" Width="*"/>
+                            <DataGridTextColumn Header="Описание" Binding="{Binding Description}" Width="*"/>
+                            <DataGridTextColumn Header="Кол-во новостей" Binding="{Binding CountNews}" Width="120"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Window>

@@ -1,0 +1,40 @@
+﻿<Window x:Class="NewsWPF.Pages.AddEditCategoryWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Редактирование категории" Height="300" Width="450">
+
+    <Window.Resources>
+        <Style TargetType="TextBox" x:Key="ValidatedTextBox">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding HasNameError}" Value="True">
+                    <Setter Property="BorderBrush" Value="Red"/>
+                    <Setter Property="BorderThickness" Value="2"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="Название категории:" FontWeight="Bold"/>
+        <TextBox Grid.Row="1" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" 
+                 Style="{StaticResource ValidatedTextBox}" Margin="0,5,0,15"/>
+
+        <TextBlock Grid.Row="2" Text="Описание:" FontWeight="Bold"/>
+        <TextBox Grid.Row="2" Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}" 
+                 TextWrapping="Wrap" AcceptsReturn="True" Height="80" Margin="0,25,0,0"/>
+
+        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,15,0,0">
+            <Button Content="Сохранить" Width="100" Margin="0,0,10,0" 
+                    IsEnabled="{Binding CanSave}" 
+                    Click="SaveButton_Click" Style="{StaticResource GreenBtn}"/>
+            <Button Content="Отмена" Width="100" Click="CancelButton_Click" Style="{StaticResource RedBtn}"/>
+        </StackPanel>
+    </Grid>
+</Window>

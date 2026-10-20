@@ -1,0 +1,64 @@
+﻿<Window x:Class="NewsWPF.Pages.AddEditNewsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Редактирование новости" Height="550" Width="500"
+        WindowStartupLocation="CenterOwner">
+
+    <Window.Resources>
+        <Style TargetType="TextBox" x:Key="ValidatedTextBox">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding HasTitleError}" Value="True">
+                    <Setter Property="BorderBrush" Value="Red"/>
+                    <Setter Property="BorderThickness" Value="2"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding HasAuthorError}" Value="True">
+                    <Setter Property="BorderBrush" Value="Red"/>
+                    <Setter Property="BorderThickness" Value="2"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style TargetType="DatePicker" x:Key="ValidatedDatePicker">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding HasDateError}" Value="True">
+                    <Setter Property="BorderBrush" Value="Red"/>
+                    <Setter Property="BorderThickness" Value="2"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+
+    <ScrollViewer Margin="15">
+        <StackPanel>
+            <TextBlock Text="Заголовок (5-200 символов):" FontWeight="Bold"/>
+            <TextBox Text="{Binding Title, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource ValidatedTextBox}"/>
+
+            <TextBlock Text="Текст новости (20-10000 символов):" FontWeight="Bold"/>
+            <TextBox Text="{Binding Text, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" AcceptsReturn="True" Height="100"/>
+
+            <TextBlock Text="Категория:" FontWeight="Bold"/>
+            <ComboBox ItemsSource="{Binding CategoriesForCombo}" 
+                      SelectedItem="{Binding SelectedCategory}" 
+                      DisplayMemberPath="Name"/>
+
+            <TextBlock Text="Дата публикации (не позднее сегодня):" FontWeight="Bold"/>
+            <DatePicker SelectedDate="{Binding DateOfPublication, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource ValidatedDatePicker}"/>
+
+            <TextBlock Text="Автор (5-100 символов, только буквы и пробелы):" FontWeight="Bold"/>
+            <TextBox Text="{Binding Author, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource ValidatedTextBox}"/>
+
+            <TextBlock Text="Статус:" FontWeight="Bold"/>
+            <ComboBox SelectedItem="{Binding SelectedStatus}">
+                <ComboBoxItem Content="Опубликовано"/>
+                <ComboBoxItem Content="Черновик"/>
+            </ComboBox>
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,15,0,0">
+                <Button Content="Сохранить" Width="100" Margin="0,0,10,0" 
+                        IsEnabled="{Binding CanSave}" 
+                        Click="SaveButton_Click" Style="{StaticResource GreenBtn}"/>
+                <Button Content="Отмена" Width="100" Click="CancelButton_Click" Style="{StaticResource RedBtn}"/>
+            </StackPanel>
+        </StackPanel>
+    </ScrollViewer>
+</Window>
